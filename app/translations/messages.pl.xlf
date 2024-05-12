@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="pl" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="label.actions">
+        <source>label.actions</source>
+        <target>Działania</target>
+      </trans-unit>
+      <trans-unit id="label.id">
+        <source>label.id</source>
+        <target>Id</target>
+      </trans-unit>
+      <trans-unit id="label.title">
+        <source>label.title</source>
+        <target>Tytuł</target>
+      </trans-unit>
+      <trans-unit id="label.content">
+        <source>label.content</source>
+        <target>Treść</target>
+      </trans-unit>
+      <trans-unit id="message.empty_list">
+        <source>message.empty_list</source>
+        <target>Lista jest pusta.</target>
+      </trans-unit>
+      <trans-unit id="message.record_not_found">
+        <source>message.record_not_found</source>
+        <target>Nie znaleziono posta.</target>
+      </trans-unit>
+      <trans-unit id="title.record_list">
+        <source>title.record_list</source>
+        <target>Lista postów</target>
+      </trans-unit>
+      <trans-unit id="title.record_view">
+        <source>title.record_view</source>
+        <target>Record view #%id%</target>
+      </trans-unit>
+
+      <trans-unit id="title.post_details">
+          <source>title.post_details</source>
+          <target>Post #%id%</target>
+      </trans-unit>
+      <trans-unit id="title.post_list">
+           <source>title.post_list</source>
+           <target>Lista postów</target>
+      </trans-unit>
+      <trans-unit id="label.created_at">
+           <source>label.created_at</source>
+           <target>Utworzony</target>
+      </trans-unit>
+      <trans-unit id="label.updated_at">
+           <source>label.updated_at</source>
+           <target>Zmodyfikowany</target>
+      </trans-unit>
+      <trans-unit id="label.category">
+           <source>label.category</source>
+           <target>Kategoria</target>
+      </trans-unit>
+      <trans-unit id="action.show">
+           <source>action.show</source>
+           <target>Pokaż</target>
+      </trans-unit>
+      <trans-unit id="action.edit">
+           <source>action.edit</source>
+           <target>Edytuj</target>
+      </trans-unit>
+      <trans-unit id="action.delete">
+           <source>action.delete</source>
+           <target>Usuń</target>
+      </trans-unit>
+      <trans-unit id="action.show_category_list">
+           <source>action.show_category_list</source>
+           <target>Pokaż listę kategorii</target>
+      </trans-unit>
+      <trans-unit id="action.back_to_list">
+           <source>action.back_to_list</source>
+           <target>Powrót do listy</target>
+      </trans-unit>
+      <trans-unit id="title.category_list">
+           <source>title.category_list</source>
+           <target>Kategorie</target>
+      </trans-unit>
+      <trans-unit id="action.create_category">
+           <source>action.create_category</source>
+           <target>Utwórz kategorię</target>
+      </trans-unit>
+      <trans-unit id="title.post_edit">
+           <source>title.post_edit</source>
+           <target>Edytuj post</target>
+      </trans-unit>
+      <trans-unit id="action.show_post_list">
+           <source>action.show_post_list</source>
+           <target>Pokaż listę postów</target>
+      </trans-unit>
+      <trans-unit id="title.category_edit">
+           <source>title.category_edit</source>
+           <target>Edytuj kategorię</target>
+      </trans-unit>
+      <trans-unit id="title.category_create">
+           <source>title.category_create</source>
+           <target>Utwórz kategorię</target>
+      </trans-unit>
+      <trans-unit id="action.save">
+           <source>action.save</source>
+           <target>Zapisz</target>
+      </trans-unit>
+      <trans-unit id="title.post_create">
+           <source>title.post_create</source>
+           <target>Utwórz post</target>
+      </trans-unit>
+      <trans-unit id="label.none">
+           <source>label.none</source>
+           <target>Brak</target>
+      </trans-unit>
+      <trans-unit id="action.create_post">
+           <source>action.create_post</source>
+           <target>Utwórz post</target>
+      </trans-unit>
+      <trans-unit id="message.form_error">
+           <source>message.form_error</source>
+           <target>Błędny formularz</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
