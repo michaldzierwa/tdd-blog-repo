@@ -24,10 +24,10 @@
             </li>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('app_logout') }}">{{ 'action_logout'|trans }}</a>
+                    <a class="nav-link" href="{{ url('app_logout') }}">{{ 'action.logout'|trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('user_edit', {id: app.user.id}) }}">{{ 'action_change_password'|trans }}</a>
+                    <a class="nav-link" href="{{ url('user_edit', {id: app.user.id}) }}">{{ 'action.change_data'|trans }}</a>
                 </li>
 {#                <li class="nav-item">#}
 {#                    <a class="nav-link" href="{{ url('user_editdata', {id: app.user.id}) }}">{{ 'action_change_data'|trans }}</a>#}
@@ -35,9 +35,14 @@
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#">{{ app.user.email }}</a>
                 </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('user_index') }}">User Administration</a>
+                    </li>
+                {% endif %}
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>
+                    <a class="nav-link" href="{{ url('app_login') }}">{{ 'action.login'|trans }}</a>
                 </li>
             {% endif %}
         </ul>

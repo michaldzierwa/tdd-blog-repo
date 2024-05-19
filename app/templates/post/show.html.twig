@@ -33,7 +33,7 @@
                 <thead>
                 <tr>
                     <th>{{ knp_pagination_sortable(commentPagination, 'label.id'|trans, 'comment.id') }}</th>
-                    <th>{{ knp_pagination_sortable(commentPagination, 'label.nick'|trans, 'comment.nick') }}</th>
+                    <th>{{ knp_pagination_sortable(commentPagination, 'label.author'|trans, 'comment.nick') }}</th>
                     <th>{{ knp_pagination_sortable(commentPagination, 'label.created_at'|trans, 'comment.createdAt') }}</th>
                     <th>{{ knp_pagination_sortable(commentPagination, 'label.content'|trans, 'comment.content') }}</th>
                     {% if is_granted("ROLE_ADMIN") %}
@@ -45,15 +45,15 @@
                 {% for comment in commentPagination.items %}
                     <tr>
                         <td>{{ comment.id }}</td>
-                        <td>{{ comment.nick }}</td>
+                        <td>{{ comment.getAuthor.email }}</td>
                         <td>{{ comment.createdAt|format_date('long') }}</td>
                         <td>{{ comment.content }}</td>
-{#                        {% if is_granted("ROLE_ADMIN") %}#}
+                        {% if is_granted('DELETE', comment) %}
                             <td>
                                 <a class="btn btn-outline-danger" href="{{ url('comment_delete', {id: comment.id}) }}" title="{{ 'action.delete'|trans }}">
                                     {{ 'action.delete'|trans }}
                                 </a></td>
-{#                        {% endif %}#}
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

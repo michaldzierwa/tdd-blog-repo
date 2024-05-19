@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Index{% endblock %}
+
+{% block body %}
+    <h1>User Index</h1>
+
+    {% if users %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'Id' }}</th>
+                <th>{{ 'Email' }}</th>
+                <th>{{ 'Roles' }}</th>
+                <th>{{ 'Actions' }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.roles|join(', ') }}</td>
+                    <td>
+                        <a class="btn btn-outline-primary" href="{{ path('user_show', {'id': user.id}) }}" title="Show">
+                            Show
+                        </a>
+                        <a class="btn btn-outline-warning" href="{{ path('user_edit', {'id': user.id}) }}" title="Edit">
+                            Edit
+                        </a>
+{#                        <form method="post" action="{{ path('user_delete', {'id': user.id}) }}" style="display:inline-block;">#}
+{#                            <input type="hidden" name="_method" value="DELETE">#}
+{#                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">#}
+{#                            <button type="submit" class="btn btn-outline-danger" title="Delete">#}
+{#                                Delete#}
+{#                            </button>#}
+{#                        </form>#}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+{#        <p>#}
+{#            <a class="btn btn-outline-primary" href="{{ path('user_create') }}" title="Create User">#}
+{#                Create User#}
+{#            </a>#}
+{#        </p>#}
+    {% else %}
+        <p>
+            {% include 'default/_single_alert_message.html.twig' with {
+                type: 'warning',
+                message: 'No users found.'
+            } %}
+        </p>
+    {% endif %}
+{% endblock %}

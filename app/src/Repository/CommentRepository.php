@@ -22,7 +22,7 @@ class CommentRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->getOrCreateQueryBuilder()
             ->select(
-                'partial comment.{id, nick, email, createdAt, content}'
+                'partial comment.{id, author, createdAt, content}'
             )
             ->orderBy('comment.createdAt', 'DESC');
         $queryBuilder->andWhere('comment.post = :post')

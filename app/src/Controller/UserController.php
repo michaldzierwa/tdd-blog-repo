@@ -51,6 +51,16 @@ class UserController extends AbstractController
         $this->translator = $translator;
         $this->userService = $userService;
     }
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/', name: 'user_index', methods: ['GET'])]
+    public function index(): Response
+    {
+        $users = $this->userService->queryAll();
+
+        return $this->render('user/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
 
     /**
      * Show action.
@@ -76,7 +86,7 @@ class UserController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'user_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function edit(Request $request, User $user): Response
     {
         $form = $this->createForm(UserType::class, $user, [

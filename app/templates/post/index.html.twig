@@ -35,12 +35,14 @@
                         <a class="btn btn-outline-primary" href="{{ url('post_show', {id: post.id}) }}" title="{{ 'action.show'|trans }}">
                             {{ 'action.show'|trans }}
                         </a>
-                        <a class="btn btn-outline-warning" href="{{ url('post_edit', {id: post.id}) }}" title="{{ 'action.edit'|trans }}">
-                            {{ 'action.edit'|trans }}
-                        </a>
-                        <a class="btn btn-outline-danger" href="{{ url('post_delete', {id: post.id}) }}" title="{{ 'action.delete'|trans }}">
-                            {{ 'action.delete'|trans }}
-                        </a>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a class="btn btn-outline-warning" href="{{ url('post_edit', {id: post.id}) }}" title="{{ 'action.edit'|trans }}">
+                                {{ 'action.edit'|trans }}
+                            </a>
+                            <a class="btn btn-outline-danger" href="{{ url('post_delete', {id: post.id}) }}" title="{{ 'action.delete'|trans }}">
+                                {{ 'action.delete'|trans }}
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
@@ -51,11 +53,13 @@
             {{ knp_pagination_render(pagination) }}
         </div>
 
-        <p>
-            <a class="btn btn-outline-primary" href="{{ url('post_create') }}" title="{{ 'action.create_post'|trans }}">
-                {{ 'action.create_post'|trans }}
-            </a>
-        </p>
+        {% if is_granted("ROLE_ADMIN") %}
+            <p>
+                <a class="btn btn-outline-primary" href="{{ url('post_create') }}" title="{{ 'action.create_post'|trans }}">
+                    {{ 'action.create_post'|trans }}
+                </a>
+            </p>
+        {% endif %}
 
     {% else %}
         <p>
