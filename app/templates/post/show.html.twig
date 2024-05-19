@@ -18,7 +18,65 @@
             <dd>{{  post.title }}</dd>
             <dt>{{ 'label.category'|trans }}</dt>
             <dd>{{  post.category.title }}</dd>
+            <dt>{{ 'label.content'|trans }}</dt>
+            <dd>{{ post.content }}</dd>
         </dl>
+
+        <h1>{{ 'title.comment_list'|trans }}</h1>
+        {% if commentPagination is defined and commentPagination.items|length %}
+
+            <div class="navigation text-center">
+                {{ knp_pagination_render(commentPagination) }}
+            </div>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>{{ knp_pagination_sortable(commentPagination, 'label.id'|trans, 'comment.id') }}</th>
+                    <th>{{ knp_pagination_sortable(commentPagination, 'label.nick'|trans, 'comment.nick') }}</th>
+                    <th>{{ knp_pagination_sortable(commentPagination, 'label.created_at'|trans, 'comment.createdAt') }}</th>
+                    <th>{{ knp_pagination_sortable(commentPagination, 'label.content'|trans, 'comment.content') }}</th>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <th>{{ 'label.actions'|trans }}</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for comment in commentPagination.items %}
+                    <tr>
+                        <td>{{ comment.id }}</td>
+                        <td>{{ comment.nick }}</td>
+                        <td>{{ comment.createdAt|format_date('long') }}</td>
+                        <td>{{ comment.content }}</td>
+{#                        {% if is_granted("ROLE_ADMIN") %}#}
+                            <td>
+                                <a class="btn btn-outline-danger" href="{{ url('comment_delete', {id: comment.id}) }}" title="{{ 'action.delete'|trans }}">
+                                    {{ 'action.delete'|trans }}
+                                </a></td>
+{#                        {% endif %}#}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="navigation text-center">
+                {{ knp_pagination_render(commentPagination) }}
+            </div>
+
+        {% else %}
+            <p>
+                {% include 'default/_single_alert_message.html.twig' with {
+                    type: 'warning',
+                    message: 'message.empty_commentlist'|trans
+                } %}
+            </p>
+        {% endif %}
+        <p>
+            <a class="btn btn-outline-primary" href="{{ url('comment_create', {id: post.id}) }}" title="{{ 'action.comment_create'|trans }}">
+                {{ 'action.comment_create'|trans }}
+            </a>
+        </p>
+
         <p>
             <a href="{{ url('post_index') }}" title="{{ 'action.back_to_list'|trans }}">
                 {{ 'action.back_to_list'|trans }}

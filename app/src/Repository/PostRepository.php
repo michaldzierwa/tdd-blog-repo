@@ -45,7 +45,7 @@ class PostRepository extends ServiceEntityRepository
     {
         return $this->getOrCreateQueryBuilder()
             ->select(
-                'partial post.{id, createdAt, updatedAt, title}',
+                'partial post.{id, createdAt, updatedAt, title, content}',
                 'partial category.{id, title}'
             )
             ->join('post.category', 'category')

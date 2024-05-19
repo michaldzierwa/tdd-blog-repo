@@ -7,6 +7,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\Type\PostType;
+use App\Service\CommentServiceInterface;
 use App\Service\PostServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -26,7 +27,7 @@ class PostController extends AbstractController
      * Constructor.
      * @param PostServiceInterface $postService
      */
-    public function __construct(private readonly PostServiceInterface $postService, private readonly TranslatorInterface $translator)
+    public function __construct(private readonly PostServiceInterface $postService, private readonly TranslatorInterface $translator, private readonly CommentServiceInterface $commentService)
     {
     }
 
@@ -53,9 +54,11 @@ class PostController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}', name: 'post_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
-    public function show(Post $post): Response
+    public function show(Post $post, #[MapQueryParameter] int $page = 1): Response
     {
-        return $this->render('post/show.html.twig', ['post' => $post]);
+        $commentPagination = $this->commentService->getPaginatedList($page, $post);
+
+        return $this->render('post/show.html.twig', ['post' => $post, 'commentPagination' => $commentPagination]);
     }
 
     /**
@@ -151,8 +154,12 @@ class PostController extends AbstractController
             ]
         );
         $form->handleRequest($request);
+        $comments = $this->commentService->findByPost($post);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($comments as $comment) {
+                $this->commentService->delete($comment);
+            }
             $this->postService->delete($post);
 
             $this->addFlash(

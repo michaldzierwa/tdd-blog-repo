@@ -22,17 +22,29 @@
         <source>message.empty_list</source>
         <target>List is empty.</target>
       </trans-unit>
-      <trans-unit id="message.record_not_found">
-        <source>message.record_not_found</source>
-        <target>Record not found.</target>
+      <trans-unit id="message.empty_commentlist">
+        <source>message.empty_commentlist</source>
+        <target>There are no comments.</target>
       </trans-unit>
-      <trans-unit id="title.record_list">
-        <source>title.record_list</source>
-        <target>Records list</target>
+      <trans-unit id="message.post_not_found">
+        <source>message.post_not_found</source>
+        <target>Post not found.</target>
       </trans-unit>
-      <trans-unit id="title.record_view">
-        <source>title.record_view</source>
-        <target>Record view #%id%</target>
+      <trans-unit id="message.edited_successfully">
+        <source>message.edited_successfully</source>
+        <target>Edited successfully.</target>
+      </trans-unit>
+      <trans-unit id="message.category_contains_posts">
+        <source>message.category_contains_posts</source>
+        <target>Unable to edit - category contains posts.</target>
+      </trans-unit>
+      <trans-unit id="message.created_successfully">
+        <source>message.created_successfully</source>
+        <target>Created successfully.</target>
+      </trans-unit>
+      <trans-unit id="message.deleted_successfully">
+        <source>message.deleted_successfully</source>
+        <target>Deleted successfully.</target>
       </trans-unit>
 
       <trans-unit id="title.post_details">
@@ -54,6 +66,26 @@
       <trans-unit id="label.category">
            <source>label.category</source>
            <target>Category</target>
+      </trans-unit>
+      <trans-unit id="label.nick">
+           <source>label.nick</source>
+           <target>Nick</target>
+      </trans-unit>
+      <trans-unit id="label.email">
+           <source>label.email</source>
+           <target>Email</target>
+      </trans-unit>
+      <trans-unit id="label.new_password">
+           <source>label.new_password</source>
+           <target>New password</target>
+      </trans-unit>
+      <trans-unit id="label.password.repeat">
+           <source>label.password.repeat</source>
+           <target>Repeat password</target>
+      </trans-unit>
+      <trans-unit id="label.none">
+           <source>label.none</source>
+           <target>Select</target>
       </trans-unit>
       <trans-unit id="action.show">
            <source>action.show</source>
@@ -83,9 +115,25 @@
            <source>action.create_category</source>
            <target>Create category</target>
       </trans-unit>
+      <trans-unit id="title.category_details">
+           <source>title.category_details</source>
+           <target>Category details</target>
+      </trans-unit>
+      <trans-unit id="title.category_delete">
+           <source>title.category_delete</source>
+           <target>Delete category</target>
+      </trans-unit>
+      <trans-unit id="message.category_not_found">
+           <source>message.category_not_found</source>
+           <target>Category not found</target>
+      </trans-unit>
       <trans-unit id="title.post_edit">
            <source>title.post_edit</source>
            <target>Edit post</target>
+      </trans-unit>
+      <trans-unit id="title.post_delete">
+           <source>title.post_delete</source>
+           <target>Delete post</target>
       </trans-unit>
       <trans-unit id="action.show_post_list">
            <source>action.show_post_list</source>
@@ -107,10 +155,7 @@
            <source>title.post_create</source>
            <target>Create post</target>
       </trans-unit>
-      <trans-unit id="label.none">
-           <source>label.none</source>
-           <target>None</target>
-      </trans-unit>
+
       <trans-unit id="action.create_post">
            <source>action.create_post</source>
            <target>Create post</target>
@@ -119,6 +164,67 @@
            <source>message.form_error</source>
            <target>Form error</target>
       </trans-unit>
+      <trans-unit id="title.comment_list">
+           <source>title.comment_list</source>
+           <target>Comments</target>
+      </trans-unit>
+      <trans-unit id="title.comment_create">
+           <source>title.comment_create</source>
+           <target>Add comment</target>
+      </trans-unit>
+      <trans-unit id="title.comment_delete">
+           <source>title.comment_delete</source>
+           <target>Delete comment</target>
+      </trans-unit>
+      <trans-unit id="action.comment_create">
+           <source>action.comment_create</source>
+           <target>Add comment</target>
+      </trans-unit>
+      <trans-unit id="action.homepage">
+           <source>action.homepage</source>
+           <target>Homepage</target>
+      </trans-unit>
+      <trans-unit id="action_logout">
+           <source>action_logout</source>
+           <target>Log out</target>
+      </trans-unit>
+      <trans-unit id="action_change_password">
+           <source>action_change_password</source>
+           <target>Change password</target>
+      </trans-unit>
+      <trans-unit id="action_change_data">
+           <source>action_change_data</source>
+           <target>Change data</target>
+      </trans-unit>
+      <trans-unit id="action_login">
+           <source>action_login</source>
+           <target>Log in</target>
+      </trans-unit>
+      <trans-unit id="title.user_edit">
+           <source>title.user_edit</source>
+           <target>Change password</target>
+      </trans-unit>
+      <trans-unit id="title.userdata_edit">
+           <source>title.userdata_edit</source>
+           <target>Change data</target>
+      </trans-unit>
+      <trans-unit id="title.log_in">
+           <source>title.log_in</source>
+           <target>Log in!</target>
+      </trans-unit>
+      <trans-unit id="title.sign_in">
+           <source>title.sign_in</source>
+           <target>Please sign in</target>
+      </trans-unit>
+      <trans-unit id="label.password">
+           <source>label.password</source>
+           <target>Password</target>
+      </trans-unit>
+      <trans-unit id="action.sign_in">
+           <source>action.sign_in</source>
+           <target>Sign in</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>
