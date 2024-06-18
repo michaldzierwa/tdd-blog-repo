@@ -22,12 +22,14 @@ interface CommentServiceInterface
      * @return PaginationInterface<string, mixed> Paginated list
      */
     public function getPaginatedList(int $page, Post $post): PaginationInterface;
+
     /**
      * Delete entity.
      *
      * @param Comment $comment Comment entity
      */
     public function delete(Comment $comment): void;
+
     /**
      * Save entity.
      *

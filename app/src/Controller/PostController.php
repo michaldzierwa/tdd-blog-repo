@@ -5,8 +5,10 @@
 
 namespace App\Controller;
 
+use App\Dto\PostListInputFiltersDto;
 use App\Entity\Post;
 use App\Form\Type\PostType;
+use App\Resolver\PostListInputFiltersDtoResolver;
 use App\Service\CommentServiceInterface;
 use App\Service\PostServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -25,7 +28,6 @@ class PostController extends AbstractController
 {
     /**
      * Constructor.
-     * @param PostServiceInterface $postService
      */
     public function __construct(private readonly PostServiceInterface $postService, private readonly TranslatorInterface $translator, private readonly CommentServiceInterface $commentService)
     {
@@ -39,9 +41,12 @@ class PostController extends AbstractController
      * @return Response HTTP response
      */
     #[Route(name: 'post_index', methods: 'GET')]
-    public function index(#[MapQueryParameter] int $page = 1): Response
+    public function index(#[MapQueryString(resolver: PostListInputFiltersDtoResolver::class)] PostListInputFiltersDto $filters, #[MapQueryParameter] int $page = 1): Response
     {
-        $pagination = $this->postService->getPaginatedList($page);
+        $pagination = $this->postService->getPaginatedList(
+            $page,
+            $filters
+        );
 
         return $this->render('post/index.html.twig', ['pagination' => $pagination]);
     }
@@ -49,13 +54,20 @@ class PostController extends AbstractController
     /**
      * Show action.
      *
-     * @param Post $post Post entity
-     *
      * @return Response HTTP response
      */
     #[Route('/{id}', name: 'post_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
-    public function show(Post $post, #[MapQueryParameter] int $page = 1): Response
+    public function show(int $id, #[MapQueryParameter] int $page = 1): Response
     {
+        $post = $this->postService->findOneById($id);
+        if (!$post) {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.post_not_found')
+            );
+
+            return $this->redirectToRoute('post_index');
+        }
         $commentPagination = $this->commentService->getPaginatedList($page, $post);
 
         return $this->render('post/show.html.twig', ['post' => $post, 'commentPagination' => $commentPagination]);
@@ -69,6 +81,7 @@ class PostController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/create', name: 'post_create', methods: 'GET|POST', )]
+    #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request): Response
     {
         $post = new Post();
@@ -90,7 +103,7 @@ class PostController extends AbstractController
             return $this->redirectToRoute('post_index');
         }
 
-        return $this->render('post/create.html.twig',  ['form' => $form->createView()]);
+        return $this->render('post/create.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -102,6 +115,7 @@ class PostController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'post_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Post $post): Response
     {
         $form = $this->createForm(
@@ -143,6 +157,7 @@ class PostController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'post_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Post $post): Response
     {
         $form = $this->createForm(

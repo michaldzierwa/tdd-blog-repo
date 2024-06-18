@@ -6,7 +6,6 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -22,8 +21,6 @@ class Category
 {
     /**
      * Primary key.
-     *
-     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -32,28 +29,22 @@ class Category
 
     /**
      * Created at.
-     *
-     * @var DateTimeImmutable|null
      */
     #[ORM\Column(type: 'datetime_immutable')]
-    #[Assert\Type(DateTimeImmutable::class)]
+    #[Assert\Type(\DateTimeImmutable::class)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $createdAt;
 
     /**
      * Updated at.
-     *
-     * @var DateTimeImmutable|null
      */
     #[ORM\Column(type: 'datetime_immutable')]
-    #[Assert\Type(DateTimeImmutable::class)]
+    #[Assert\Type(\DateTimeImmutable::class)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt;
 
     /**
      * Title.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Type('string')]
@@ -63,7 +54,6 @@ class Category
 
     /**
      * Slug.
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]

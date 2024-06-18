@@ -22,12 +22,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/comment')]
 class CommentController extends AbstractController
 {
-
     /**
      * Constructor.
      *
      * @param CommentServiceInterface $postService Post service
-     * @param TranslatorInterface      $translator  Translator
+     * @param TranslatorInterface     $translator  Translator
      */
     public function __construct(private readonly CommentServiceInterface $postService, private readonly TranslatorInterface $translator)
     {
@@ -36,14 +35,17 @@ class CommentController extends AbstractController
 
     /**
      * Create action.
+     * @param Request $request
+     * @param Post $post
+     * @return Response
      */
     #[Route('/{id}/create', name: 'comment_create', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST', )]
     public function create(Request $request, Post $post): Response
     {
-        $user = $this->getUser();
+        //        $user = $this->getUser();
         $comment = new Comment();
         $comment->setPost($post);
-        $comment->setAuthor($user);
+        //        $comment->setAuthor($user);
         $form = $this->createForm(CommentType::class, $comment, ['action' => $this->generateUrl('comment_create', ['id' => $post->getId()])]);
         $form->handleRequest($request);
 
@@ -60,10 +62,9 @@ class CommentController extends AbstractController
 
         return $this->render('comment/create.html.twig', [
             'form' => $form->createView(),
-            'post'=>$post
+            'post' => $post,
         ]);
     }
-
 
     /**
      * Delete action.
@@ -98,5 +99,4 @@ class CommentController extends AbstractController
             'comment' => $comment,
         ]);
     }
-
 }

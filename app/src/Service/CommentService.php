@@ -9,8 +9,6 @@ use App\Entity\Comment;
 use App\Entity\Post;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -23,7 +21,6 @@ class CommentService implements CommentServiceInterface
      * Comment repository.
      */
     private CommentRepository $commentRepository;
-
 
     /**
      * Paginator.
@@ -38,13 +35,12 @@ class CommentService implements CommentServiceInterface
     /**
      * Constructor.
      *
-     * @param CommentRepository $commentRepository Comment repository
-     * @param PaginatorInterface $paginator Paginator
-     * @param PostRepository $postRepository Post repository
+     * @param CommentRepository  $commentRepository Comment repository
+     * @param PaginatorInterface $paginator         Paginator
+     * @param PostRepository     $postRepository    Post repository
      */
     public function __construct(CommentRepository $commentRepository, PaginatorInterface $paginator, PostRepository $postRepository)
     {
-
         $this->commentRepository = $commentRepository;
         $this->paginator = $paginator;
         $this->postRepository = $postRepository;
@@ -62,9 +58,10 @@ class CommentService implements CommentServiceInterface
         return $this->paginator->paginate(
             $this->commentRepository->queryAll($post),
             $page,
-        //    CommentRepository::PAGINATOR_ITEMS_PER_PAGE
+            //    CommentRepository::PAGINATOR_ITEMS_PER_PAGE
         );
     }
+
     /**
      * Delete entity.
      *
@@ -74,6 +71,7 @@ class CommentService implements CommentServiceInterface
     {
         $this->commentRepository->delete($comment);
     }
+
     /**
      * Save entity.
      *
@@ -90,5 +88,4 @@ class CommentService implements CommentServiceInterface
 
         return $this->commentRepository->findBy(['post' => $postId]);
     }
-
 }

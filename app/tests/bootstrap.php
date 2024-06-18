@@ -11,7 +11,7 @@ if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
 }
 $consolePath = 'D:/epi_2_st/xampp/htdocs/blog-tdd/app/bin/console';
 // Drop the existing schema
-passthru('php ' . $consolePath . ' --env=test doctrine:schema:drop --full-database --force');
+passthru('php '.$consolePath.' --env=test doctrine:schema:drop --full-database --force');
 
 // Run the migrations to set up the schema
-passthru('php ' . $consolePath . ' --env=test --no-interaction doctrine:migrations:migrate');
+passthru('php '.$consolePath.' --env=test --no-interaction doctrine:migrations:migrate');

@@ -5,6 +5,8 @@
 
 namespace App\Service;
 
+use App\Dto\PostListFiltersDto;
+use App\Dto\PostListInputFiltersDto;
 use App\Entity\Post;
 use App\Repository\PostRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -32,7 +34,7 @@ class PostService implements PostServiceInterface
      * @param PostRepository     $postRepository Post repository
      * @param PaginatorInterface $paginator      Paginator
      */
-    public function __construct(private readonly PostRepository $postRepository, private readonly PaginatorInterface $paginator)
+    public function __construct(private readonly CategoryServiceInterface $categoryService, private readonly PostRepository $postRepository, private readonly PaginatorInterface $paginator)
     {
     }
 
@@ -43,10 +45,12 @@ class PostService implements PostServiceInterface
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedList(int $page): PaginationInterface
+    public function getPaginatedList(int $page, PostListInputFiltersDto $filters): PaginationInterface
     {
+        $filters = $this->prepareFilters($filters);
+
         return $this->paginator->paginate(
-            $this->postRepository->queryAll(),
+            $this->postRepository->queryAll($filters),
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
@@ -72,4 +76,22 @@ class PostService implements PostServiceInterface
         $this->postRepository->delete($post);
     }
 
+    /**
+     * Prepare filters for the posts list.
+     *
+     * @param PostListInputFiltersDto $filters Raw filters from request
+     *
+     * @return PostListFiltersDto Result filters
+     */
+    private function prepareFilters(PostListInputFiltersDto $filters): PostListFiltersDto
+    {
+        return new PostListFiltersDto(
+            null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null,
+        );
+    }
+
+    public function findOneById(int $id): ?Post
+    {
+        return $this->postRepository->findOneById($id);
+    }
 }

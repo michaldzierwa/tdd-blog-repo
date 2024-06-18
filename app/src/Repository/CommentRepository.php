@@ -18,11 +18,12 @@ class CommentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comment::class);
     }
+
     public function queryAll(Post $post): QueryBuilder
     {
         $queryBuilder = $this->getOrCreateQueryBuilder()
             ->select(
-                'partial comment.{id, author, createdAt, content}'
+                'partial comment.{id, nick, email, createdAt, content}'
             )
             ->orderBy('comment.createdAt', 'DESC');
         $queryBuilder->andWhere('comment.post = :post')
@@ -30,7 +31,8 @@ class CommentRepository extends ServiceEntityRepository
 
         return $queryBuilder;
     }
-    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
+
+    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('comment');
     }

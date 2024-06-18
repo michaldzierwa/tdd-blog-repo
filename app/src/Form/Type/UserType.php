@@ -54,9 +54,9 @@ class UserType extends AbstractType
                 'second_options' => ['label' => 'label.password.repeat'],
                 'required' => false,
                 'constraints' => [
-//                    new NotBlank([
-//                        'message' => 'Enter password',
-//                    ]),
+                    //                    new NotBlank([
+                    //                        'message' => 'Enter password',
+                    //                    ]),
                     new Length([
                         'min' => 6,
                         'max' => 4096,

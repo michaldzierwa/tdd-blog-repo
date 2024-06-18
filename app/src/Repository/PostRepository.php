@@ -5,6 +5,7 @@
 
 namespace App\Repository;
 
+use App\Dto\PostListFiltersDto;
 use App\Entity\Category;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -41,15 +42,35 @@ class PostRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder Query builder
      */
-    public function queryAll(): QueryBuilder
+    public function queryAll(PostListFiltersDto $filters): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()
+        $queryBuilder = $this->getOrCreateQueryBuilder()
             ->select(
                 'partial post.{id, createdAt, updatedAt, title, content}',
                 'partial category.{id, title}'
             )
             ->join('post.category', 'category')
             ->orderBy('post.updatedAt', 'DESC');
+
+        return $this->applyFiltersToList($queryBuilder, $filters);
+    }
+
+    /**
+     * Apply filters to paginated list.
+     *
+     * @param QueryBuilder       $queryBuilder Query builder
+     * @param PostListFiltersDto $filters      Filters
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, PostListFiltersDto $filters): QueryBuilder
+    {
+        if ($filters->category instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters->category);
+        }
+
+        return $queryBuilder;
     }
 
     /**
@@ -110,9 +131,13 @@ class PostRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder Query builder
      */
-    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
+    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('post');
     }
 
+    public function findOneById(int $id): ?Post
+    {
+        return $this->find($id);
+    }
 }

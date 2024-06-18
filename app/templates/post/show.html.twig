@@ -45,10 +45,10 @@
                 {% for comment in commentPagination.items %}
                     <tr>
                         <td>{{ comment.id }}</td>
-                        <td>{{ comment.getAuthor.email }}</td>
+                        <td>{{ comment.nick }}</td>
                         <td>{{ comment.createdAt|format_date('long') }}</td>
                         <td>{{ comment.content }}</td>
-                        {% if is_granted('DELETE', comment) %}
+                        {% if is_granted('ROLE_ADMIN', comment) %}
                             <td>
                                 <a class="btn btn-outline-danger" href="{{ url('comment_delete', {id: comment.id}) }}" title="{{ 'action.delete'|trans }}">
                                     {{ 'action.delete'|trans }}

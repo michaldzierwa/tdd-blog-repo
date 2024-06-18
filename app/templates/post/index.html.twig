@@ -30,7 +30,13 @@
                     <td>{{ post.createdAt|format_date('long') }}</td>
                     <td>{{ post.updatedAt|format_date('long') }}</td>
                     <td>{{ post.title }}</td>
-                    <td>{{ post.category.title }}</td>
+                    <td>
+                        <a class="btn btn-outline-primary"
+                           href="{{ url('post_index', {'categoryId' : post.category.id}) }}"
+                           title="{{ post.category.title }}">
+                            {{ post.category.title }}
+                        </a>
+                    </td>
                     <td>
                         <a class="btn btn-outline-primary" href="{{ url('post_show', {id: post.id}) }}" title="{{ 'action.show'|trans }}">
                             {{ 'action.show'|trans }}

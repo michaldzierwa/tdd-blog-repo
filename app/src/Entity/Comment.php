@@ -3,19 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
-use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- *
- */
-
-/**
- *
- */
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 #[ORM\Table(name: 'comments')]
 class Comment
@@ -25,16 +17,16 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
 
-//    #[ORM\Column(length: 64)]
-//    private ?string $nick = null;
-//
-//    #[ORM\Column(length: 255)]
-//    private ?string $email = null;
+    #[ORM\Column(length: 64)]
+    private ?string $nick = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    #[Assert\Type(DateTimeImmutable::class)]
+    #[Assert\Type(\DateTimeImmutable::class)]
     #[Gedmo\Timestampable(on: 'create')]
-    private ?DateTimeImmutable $createdAt;
+    private ?\DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
@@ -43,47 +35,47 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?Post $post = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank]
-    #[Assert\Type(User::class)]
-    private ?User $author;
+    //    #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
+    //    #[ORM\JoinColumn(nullable: false)]
+    //    #[Assert\NotBlank]
+    //    #[Assert\Type(User::class)]
+    //    private ?User $author;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-//    public function getNick(): ?string
-//    {
-//        return $this->nick;
-//    }
-//
-//    public function setNick(string $nick): static
-//    {
-//        $this->nick = $nick;
-//
-//        return $this;
-//    }
+    public function getNick(): ?string
+    {
+        return $this->nick;
+    }
 
-//    public function getEmail(): ?string
-//    {
-//        return $this->email;
-//    }
-//
-//    public function setEmail(string $email): static
-//    {
-//        $this->email = $email;
-//
-//        return $this;
-//    }
+    public function setNick(string $nick): static
+    {
+        $this->nick = $nick;
 
-    public function getCreatedAt(): ?DateTimeImmutable
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeImmutable $createdAt): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
@@ -114,15 +106,15 @@ class Comment
         return $this;
     }
 
-    public function getAuthor(): ?User
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?User $author): static
-    {
-        $this->author = $author;
-
-        return $this;
-    }
+    //    public function getAuthor(): ?User
+    //    {
+    //        return $this->author;
+    //    }
+    //
+    //    public function setAuthor(?User $author): static
+    //    {
+    //        $this->author = $author;
+    //
+    //        return $this;
+    //    }
 }

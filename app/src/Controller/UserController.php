@@ -51,6 +51,7 @@ class UserController extends AbstractController
         $this->translator = $translator;
         $this->userService = $userService;
     }
+
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/', name: 'user_index', methods: ['GET'])]
     public function index(): Response

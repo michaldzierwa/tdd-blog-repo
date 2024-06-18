@@ -15,7 +15,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class CommentVoter extends Voter
 {
-
     /**
      * Delete permission.
      *
@@ -66,8 +65,8 @@ class CommentVoter extends Voter
     /**
      * Checks if user can delete comment.
      *
-     * @param Comment          $comment Comment entity
-     * @param UserInterface $user User
+     * @param Comment       $comment Comment entity
+     * @param UserInterface $user    User
      *
      * @return bool Result
      */
@@ -80,7 +79,7 @@ class CommentVoter extends Voter
 
         // Allow admin to delete any comment
         foreach ($user->getRoles() as $role) {
-            if ($role === 'ROLE_ADMIN') {
+            if ('ROLE_ADMIN' === $role) {
                 return true;
             }
         }
