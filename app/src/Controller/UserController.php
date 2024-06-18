@@ -52,6 +52,9 @@ class UserController extends AbstractController
         $this->userService = $userService;
     }
 
+    /**
+     * @return Response HTTP response
+     */
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/', name: 'user_index', methods: ['GET'])]
     public function index(): Response

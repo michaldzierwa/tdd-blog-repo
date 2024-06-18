@@ -33,6 +33,9 @@ class UserService implements UserServiceInterface
         $this->userRepository->save($user);
     }
 
+    /**
+     * @return array Array
+     */
     public function queryAll(): array
     {
         return $this->userRepository->queryAll()->getQuery()->getResult();

@@ -10,8 +10,10 @@ use App\Entity\Category;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -40,6 +42,8 @@ class PostRepository extends ServiceEntityRepository
     /**
      * Query all records.
      *
+     * @param PostListFiltersDto $filters PostListFiltersDto
+     *
      * @return QueryBuilder Query builder
      */
     public function queryAll(PostListFiltersDto $filters): QueryBuilder
@@ -53,24 +57,6 @@ class PostRepository extends ServiceEntityRepository
             ->orderBy('post.updatedAt', 'DESC');
 
         return $this->applyFiltersToList($queryBuilder, $filters);
-    }
-
-    /**
-     * Apply filters to paginated list.
-     *
-     * @param QueryBuilder       $queryBuilder Query builder
-     * @param PostListFiltersDto $filters      Filters
-     *
-     * @return QueryBuilder Query builder
-     */
-    private function applyFiltersToList(QueryBuilder $queryBuilder, PostListFiltersDto $filters): QueryBuilder
-    {
-        if ($filters->category instanceof Category) {
-            $queryBuilder->andWhere('category = :category')
-                ->setParameter('category', $filters->category);
-        }
-
-        return $queryBuilder;
     }
 
     /**
@@ -125,6 +111,16 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param int $id Id
+     *
+     * @return Post|null Post
+     */
+    public function findOneById(int $id): ?Post
+    {
+        return $this->find($id);
+    }
+
+    /**
      * Get or create new query builder.
      *
      * @param QueryBuilder|null $queryBuilder Query builder
@@ -136,8 +132,21 @@ class PostRepository extends ServiceEntityRepository
         return $queryBuilder ?? $this->createQueryBuilder('post');
     }
 
-    public function findOneById(int $id): ?Post
+    /**
+     * Apply filters to paginated list.
+     *
+     * @param QueryBuilder       $queryBuilder Query builder
+     * @param PostListFiltersDto $filters      Filters
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, PostListFiltersDto $filters): QueryBuilder
     {
-        return $this->find($id);
+        if ($filters->category instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters->category);
+        }
+
+        return $queryBuilder;
     }
 }

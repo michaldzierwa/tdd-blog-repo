@@ -15,11 +15,10 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 interface CommentServiceInterface
 {
     /**
-     * Get paginated list.
+     * @param int  $page Page
+     * @param Post $post Post
      *
-     * @param int $page Page number
-     *
-     * @return PaginationInterface<string, mixed> Paginated list
+     * @return PaginationInterface Paginator interface
      */
     public function getPaginatedList(int $page, Post $post): PaginationInterface;
 

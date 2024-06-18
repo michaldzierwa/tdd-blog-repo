@@ -8,8 +8,10 @@ namespace App\Service;
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -84,14 +86,15 @@ class CategoryService implements CategoryServiceInterface
      */
     public function save(Category $category): void
     {
-        if (null == $category->getId()) {
-            //            $category->setCreatedAt(new \DateTimeImmutable());
-        }
-        //        $category->setUpdatedAt(new \DateTimeImmutable());
-
         $this->categoryRepository->save($category);
     }
 
+    /**
+     * @param Category $category Category
+     *
+     * @throws ORMException            ORMException
+     * @throws OptimisticLockException OptimisticLockException
+     */
     public function delete(Category $category): void
     {
         $this->categoryRepository->delete($category);

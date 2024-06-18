@@ -17,7 +17,8 @@ interface PostServiceInterface
     /**
      * Get paginated list.
      *
-     * @param int $page Page number
+     * @param int                     $page    Page number
+     * @param PostListInputFiltersDto $filters Filters
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -37,5 +38,10 @@ interface PostServiceInterface
      */
     public function delete(Post $post): void;
 
+    /**
+     * @param int $id Id
+     *
+     * @return Post|null Post
+     */
     public function findOneById(int $id): ?Post;
 }

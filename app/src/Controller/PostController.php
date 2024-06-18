@@ -28,6 +28,10 @@ class PostController extends AbstractController
 {
     /**
      * Constructor.
+     *
+     * @param PostServiceInterface    $postService    Post service
+     * @param TranslatorInterface     $translator     Translator
+     * @param CommentServiceInterface $commentService Comment service
      */
     public function __construct(private readonly PostServiceInterface $postService, private readonly TranslatorInterface $translator, private readonly CommentServiceInterface $commentService)
     {
@@ -36,7 +40,8 @@ class PostController extends AbstractController
     /**
      * Index action.
      *
-     * @param int $page Page number
+     * @param PostListInputFiltersDto $filters
+     * @param int                     $page    Page number
      *
      * @return Response HTTP response
      */
@@ -52,7 +57,8 @@ class PostController extends AbstractController
     }
 
     /**
-     * Show action.
+     * @param int $id   Id
+     * @param int $page Page
      *
      * @return Response HTTP response
      */
@@ -80,7 +86,7 @@ class PostController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('/create', name: 'post_create', methods: 'GET|POST', )]
+    #[Route('/create', name: 'post_create', methods: 'GET|POST')]
     #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request): Response
     {

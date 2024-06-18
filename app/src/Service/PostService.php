@@ -29,21 +29,19 @@ class PostService implements PostServiceInterface
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
     /**
-     * Constructor.
-     *
-     * @param PostRepository     $postRepository Post repository
-     * @param PaginatorInterface $paginator      Paginator
+     * @param CategoryServiceInterface $categoryService Category Service
+     * @param PostRepository           $postRepository  Post Repository
+     * @param PaginatorInterface       $paginator       Paginator
      */
     public function __construct(private readonly CategoryServiceInterface $categoryService, private readonly PostRepository $postRepository, private readonly PaginatorInterface $paginator)
     {
     }
 
     /**
-     * Get paginated list.
+     * @param int                     $page    Page
+     * @param PostListInputFiltersDto $filters Filters
      *
-     * @param int $page Page number
-     *
-     * @return PaginationInterface<string, mixed> Paginated list
+     * @return PaginationInterface Pagination Interface
      */
     public function getPaginatedList(int $page, PostListInputFiltersDto $filters): PaginationInterface
     {
@@ -77,6 +75,16 @@ class PostService implements PostServiceInterface
     }
 
     /**
+     * @param int $id Id
+     *
+     * @return Post|null Post
+     */
+    public function findOneById(int $id): ?Post
+    {
+        return $this->postRepository->findOneById($id);
+    }
+
+    /**
      * Prepare filters for the posts list.
      *
      * @param PostListInputFiltersDto $filters Raw filters from request
@@ -88,10 +96,5 @@ class PostService implements PostServiceInterface
         return new PostListFiltersDto(
             null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null,
         );
-    }
-
-    public function findOneById(int $id): ?Post
-    {
-        return $this->postRepository->findOneById($id);
     }
 }

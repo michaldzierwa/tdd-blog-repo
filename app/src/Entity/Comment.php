@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Comment entity.
+ */
+
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
@@ -8,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Comment.
+ */
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 #[ORM\Table(name: 'comments')]
 class Comment
@@ -41,16 +48,27 @@ class Comment
     //    #[Assert\Type(User::class)]
     //    private ?User $author;
 
+    /**
+     * @return int|null Id
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null Null
+     */
     public function getNick(): ?string
     {
         return $this->nick;
     }
 
+    /**
+     * @param string $nick Nick
+     *
+     * @return $this Entity
+     */
     public function setNick(string $nick): static
     {
         $this->nick = $nick;
@@ -58,11 +76,19 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return string|null Null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email Email
+     *
+     * @return $this Entity
+     */
     public function setEmail(string $email): static
     {
         $this->email = $email;
@@ -70,11 +96,19 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return \DateTimeImmutable|null Created at
+     */
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
+    /**
+     * @param \DateTimeImmutable $createdAt Created at
+     *
+     * @return $this Entity
+     */
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
@@ -82,11 +116,19 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return string|null Content
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string $content Content
+     *
+     * @return $this Entity
+     */
     public function setContent(string $content): static
     {
         $this->content = $content;
@@ -94,11 +136,19 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return Post|null Post
+     */
     public function getPost(): ?Post
     {
         return $this->post;
     }
 
+    /**
+     * @param Post|null $post Post
+     *
+     * @return $this Entity
+     */
     public function setPost(?Post $post): static
     {
         $this->post = $post;

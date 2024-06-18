@@ -135,11 +135,19 @@ class Post
         $this->title = $title;
     }
 
+    /**
+     * @return Category|null Category
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
+    /**
+     * @param Category|null $category Category
+     *
+     * @return $this Entity
+     */
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
@@ -147,11 +155,19 @@ class Post
         return $this;
     }
 
+    /**
+     * @return string|null Null
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string $content Content
+     *
+     * @return $this Entity
+     */
     public function setContent(string $content): static
     {
         $this->content = $content;

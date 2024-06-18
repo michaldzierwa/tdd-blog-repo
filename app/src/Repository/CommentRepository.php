@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Comment repository.
+ */
+
 namespace App\Repository;
 
 use App\Entity\Comment;
@@ -14,11 +18,19 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CommentRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry Manager Registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Comment::class);
     }
 
+    /**
+     * @param Post $post Post
+     *
+     * @return QueryBuilder QueryBuilder
+     */
     public function queryAll(Post $post): QueryBuilder
     {
         $queryBuilder = $this->getOrCreateQueryBuilder()
@@ -30,11 +42,6 @@ class CommentRepository extends ServiceEntityRepository
             ->setParameter('post', $post);
 
         return $queryBuilder;
-    }
-
-    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
-    {
-        return $queryBuilder ?? $this->createQueryBuilder('comment');
     }
 
     /**
@@ -61,6 +68,11 @@ class CommentRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
+    /**
+     * @param Post $post Post
+     *
+     * @return QueryBuilder QueryBuilder
+     */
     public function findByPost(Post $post): QueryBuilder
     {
         return $this->createQueryBuilder('c')
@@ -77,4 +89,14 @@ class CommentRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    /**
+     * @param QueryBuilder|null $queryBuilder QueryBuilder
+     *
+     * @return QueryBuilder QueryBuilder
+     */
+    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
+    {
+        return $queryBuilder ?? $this->createQueryBuilder('comment');
+    }
 }

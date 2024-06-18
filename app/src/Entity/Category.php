@@ -131,11 +131,19 @@ class Category
         $this->title = $title;
     }
 
+    /**
+     * @return string|null Slug
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    /**
+     * @param string|null $slug Slug
+     *
+     * @return $this Entity
+     */
     public function setSlug(?string $slug): static
     {
         $this->slug = $slug;

@@ -49,7 +49,8 @@ class CommentService implements CommentServiceInterface
     /**
      * Get paginated list.
      *
-     * @param int $page Page number
+     * @param int  $page Page number
+     * @param Post $post Post
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -82,6 +83,11 @@ class CommentService implements CommentServiceInterface
         $this->commentRepository->save($comment);
     }
 
+    /**
+     * @param Post $post Post
+     *
+     * @return array|null Array
+     */
     public function findByPost(Post $post): ?array
     {
         $postId = $post->getId();

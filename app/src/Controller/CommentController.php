@@ -35,11 +35,13 @@ class CommentController extends AbstractController
 
     /**
      * Create action.
-     * @param Request $request
-     * @param Post $post
-     * @return Response
+     *
+     * @param Request $request HTTP request
+     * @param Post    $post    Post
+     *
+     * @return Response HTTP response
      */
-    #[Route('/{id}/create', name: 'comment_create', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST', )]
+    #[Route('/{id}/create', name: 'comment_create', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
     public function create(Request $request, Post $post): Response
     {
         //        $user = $this->getUser();
