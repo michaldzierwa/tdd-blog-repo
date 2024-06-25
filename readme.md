@@ -1,4 +1,4 @@
-## Installation Instructions
+## Installation instruction
 
 ### 1. Navigate to Project Directory
 
