@@ -40,6 +40,11 @@ class CommentServiceTest extends KernelTestCase
     private ?CommentService $commentService;
 
     /**
+     * @var PostService|null post service instance
+     */
+    private ?PostService $postService;
+
+    /**
      * Set up tests.
      *
      * @return void Void

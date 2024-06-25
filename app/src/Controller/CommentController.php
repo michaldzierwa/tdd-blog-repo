@@ -24,6 +24,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CommentController extends AbstractController
 {
     /**
+     * @var CommentServiceInterface Comment Service Interface
+     */
+    private CommentServiceInterface $commentService;
+
+    /**
      * Constructor.
      *
      * @param CommentServiceInterface $postService Post service

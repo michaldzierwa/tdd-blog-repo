@@ -24,6 +24,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CategoryController extends AbstractController
 {
     /**
+     * @var CategoryServiceInterface Category service interface
+     */
+    private CategoryServiceInterface $categoryService;
+
+    /**
      * Constructor.
      *
      * @param CategoryServiceInterface $postService Post service
