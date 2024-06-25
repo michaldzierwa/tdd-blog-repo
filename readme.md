@@ -1,82 +1,60 @@
-# Docker Symfony Starter Kit
+## Installation Instructions
 
-Starter kit is based on [The perfect kit starter for a Symfony 4 project with Docker and PHP 7.2](https://medium.com/@romaricp/the-perfect-kit-starter-for-a-symfony-4-project-with-docker-and-php-7-2-fda447b6bca1).
+### 1. Navigate to Project Directory
 
-## What is inside?
-
-* Apache 2.4.57 (Debian)
-* PHP 8.3 FPM
-* MySQL 8.3.1
-* NodeJS LTS (latest)
-* Composer
-* Symfony CLI 
-* xdebug
-* djfarrelly/maildev
-
-## Requirements
-
-* Install [Docker](https://www.docker.com/products/docker-desktop) and [Docker Compose](https://docs.docker.com/compose/install) on your machine 
-
-## Installation
-
-* (optional) Add 
-
-```bash
-127.0.0.1   symfony.local
-```
-in your `host` file.
-
-* Run `build-env.sh` (or `build-env.ps1` on Windows box)
-
-* Enter the PHP container:
-
-```bash
-docker-compose exec php bash
-```
-
-* To install Symfony LTS inside container execute:
-
+In your terminal, navigate to the project directory:
 ```bash
 cd app
-rm .gitkeep
-git config --global user.email "you@example.com"
-symfony new ../app --version=lts --webapp
-chown -R dev.dev *
 ```
 
-## Container URLs and ports
+### 2. Create Directories and Set Permissions
 
-* Project URL
-
+Create `var` and `vendor` directories with permissions set to 777:
 ```bash
-http://localhost:8000
+mkdir var
+mkdir vendor
+chmod 777 var
+chmod 777 vendor
 ```
 
-or 
+### 3. Configure Database Connection
 
+In the `.env` configuration file, update the `DATABASE_URL` line with your database credentials:
+```
+DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
+```
+Replace `db_user`, `db_password`, and `db_name` with your actual database username, password, and database name.
+
+
+### 4. Install Dependencies
+
+Run the following command to install project dependencies using Composer:
 ```bash
-http://symfony.local:8000
+composer install
 ```
 
-* MySQL
+### 5. Run Migrations and Load Data
 
-    * inside container: host is `mysql`, port: `3306`
-    * outside container: host is `localhost`, port: `3307`
-    * passwords, db name are in `docker-compose.yml`
-    
-* djfarrelly/maildev i available from the browser on port `8001`
-
-* xdebug i available remotely on port `9000`
-
-* Database connection in Symfony `.env` file:
-```yaml
-DATABASE_URL=mysql://symfony:symfony@mysql:3306/symfony?serverVersion=5.7
+Execute the following commands to migrate the database schema and load initial data:
+```bash
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
 ```
 
-## Useful commands
+### 6. Access Project Homepage
 
-* `docker-compose up -d` - start containers
-* `docker-compose down` - stop containers
-* `docker-compose exec php bash` - enter into PHP container
-* `docker-compose exec mysql bash` - enter into MySQL container
-* `docker-compose exec apache bash` - enter into Apache2 container
+Visit the project homepage at:
+```
+http://localhost/<installed project directory>/app/public/post
+```
+Replace `<installed project directory>` with the directory name where the project is installed.
+
+### 7. Administrator Login Details
+
+Use the following credentials to log in as an administrator:
+- **Email:** admin0@example.com
+- **Password:** admin1234
+
+After logging in, you can update the credentials to your individual preferences.
+
+### Enjoy using the application!
