@@ -224,6 +224,26 @@
            <source>action.sign_in</source>
            <target>Zaloguj się</target>
       </trans-unit>
+      <trans-unit id="action.user_administration">
+           <source>action.user_administration</source>
+           <target>Zarządzanie użytkownikami</target>
+      </trans-unit>
+      <trans-unit id="message.record_not_found">
+           <source>message.record_not_found</source>
+           <target>Nie znaleziono rekordu!</target>
+      </trans-unit>
+      <trans-unit id="label.author">
+            <source>label.author</source>
+            <target>Autor</target>
+      </trans-unit>
+      <trans-unit id="title.user_details">
+            <source>title.user_details</source>
+            <target>Szczegóły</target>
+      </trans-unit>
+      <trans-unit id="label.roles">
+            <source>label.roles</source>
+            <target>Uprawnienia</target>
+      </trans-unit>
 
     </body>
   </file>

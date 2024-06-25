@@ -26,9 +26,11 @@
                         <a class="btn btn-outline-primary" href="{{ path('user_show', {'id': user.id}) }}" title="Show">
                             Show
                         </a>
+                        {% if is_granted('USER_EDIT', user) %}
                         <a class="btn btn-outline-warning" href="{{ path('user_edit', {'id': user.id}) }}" title="Edit">
                             Edit
                         </a>
+                        {% endif %}
 {#                        <form method="post" action="{{ path('user_delete', {'id': user.id}) }}" style="display:inline-block;">#}
 {#                            <input type="hidden" name="_method" value="DELETE">#}
 {#                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">#}

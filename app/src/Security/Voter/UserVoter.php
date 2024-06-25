@@ -1,26 +1,22 @@
 <?php
+
 /**
- * Comment voter.
+ * User Voter.
  */
 
 namespace App\Security\Voter;
 
-use App\Entity\Comment;
+use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Class CommentVoter.
+ * User Voter.
  */
-class CommentVoter extends Voter
+class UserVoter extends Voter
 {
-    /**
-     * Delete permission.
-     *
-     * @const string
-     */
-    private const DELETE = 'DELETE';
+    public const EDIT = 'USER_EDIT';
 
     /**
      * Determines if the attribute and subject are supported by this voter.
@@ -32,19 +28,18 @@ class CommentVoter extends Voter
      */
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return in_array($attribute, [self::DELETE])
-            && $subject instanceof Comment;
+        return in_array($attribute, [self::EDIT])
+            && $subject instanceof User;
     }
 
     /**
-     * Perform a single access check operation on a given attribute, subject and token.
-     * It is safe to assume that $attribute and $subject already passed the "supports()" method check.
+     * Determines if the attribute and subject are supported by this voter.
      *
-     * @param string         $attribute Permission name
-     * @param mixed          $subject   Object
-     * @param TokenInterface $token     Security token
+     * @param string         $attribute An attribute
+     * @param mixed          $subject   The subject to secure, e.g. an object the user wants to access or any other PHP type
+     * @param TokenInterface $token     Token Interface
      *
-     * @return bool Vote result
+     * @return bool Result
      */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
@@ -52,12 +47,9 @@ class CommentVoter extends Voter
         if (!$user instanceof UserInterface) {
             return false;
         }
-        if (!$subject instanceof Comment) {
-            return false;
-        }
 
         return match ($attribute) {
-            self::DELETE => $this->canDelete($subject, $user),
+            self::EDIT => $this->canEdit($subject, $user),
             default => false,
         };
     }
@@ -65,21 +57,20 @@ class CommentVoter extends Voter
     /**
      * Checks if user can delete comment.
      *
-     * @param Comment       $comment Comment entity
-     * @param UserInterface $user    User
+     * @param User          $userTomanage User to manage
+     * @param UserInterface $user         User Interface
      *
-     * @return bool Result
+     * @return bool Boolean
      */
-    private function canDelete(Comment $comment, UserInterface $user): bool
+    private function canEdit(User $userTomanage, UserInterface $user): bool
     {
-        // Allow the author to delete their own comment
-        if ($comment->getAuthor() === $user) {
+        if ($userTomanage->getUserIdentifier() === $user->getUserIdentifier()) {
             return true;
         }
 
-        // Allow admin to delete any comment
+        $roleUser = ['ROLE_USER'];
         foreach ($user->getRoles() as $role) {
-            if ('ROLE_ADMIN' === $role) {
+            if ('ROLE_ADMIN' === $role && $userTomanage->getRoles() === $roleUser) {
                 return true;
             }
         }

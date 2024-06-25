@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -116,14 +117,23 @@ class PostController extends AbstractController
      * Edit action.
      *
      * @param Request $request HTTP request
-     * @param Post    $post    Post entity
+     * @param Id      $id      Post id
      *
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'post_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
     #[IsGranted('ROLE_ADMIN')]
-    public function edit(Request $request, Post $post): Response
+    public function edit(Request $request, int $id): Response
     {
+        $post = $this->postService->findOneById($id);
+        if (!$post) {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.post_not_found')
+            );
+
+            return $this->redirectToRoute('post_index');
+        }
         $form = $this->createForm(
             PostType::class,
             $post,
@@ -158,14 +168,23 @@ class PostController extends AbstractController
      * Delete action.
      *
      * @param Request $request HTTP request
-     * @param Post    $post    Post entity
+     * @param Id      $id      Post id
      *
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'post_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     #[IsGranted('ROLE_ADMIN')]
-    public function delete(Request $request, Post $post): Response
+    public function delete(Request $request, int $id): Response
     {
+        $post = $this->postService->findOneById($id);
+        if (!$post) {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.post_not_found')
+            );
+
+            return $this->redirectToRoute('post_index');
+        }
         $form = $this->createForm(
             FormType::class,
             $post,

@@ -56,7 +56,7 @@ class UserController extends AbstractController
      * @return Response HTTP response
      */
     #[IsGranted('ROLE_ADMIN')]
-    #[Route('/', name: 'user_index', methods: ['GET'])]
+    #[Route(name: 'user_index', methods: ['GET'])]
     public function index(): Response
     {
         $users = $this->userService->queryAll();
@@ -73,6 +73,7 @@ class UserController extends AbstractController
      *
      * @return Response HTTP response
      */
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
@@ -89,8 +90,8 @@ class UserController extends AbstractController
      *
      * @return Response HTTP response
      */
+    #[IsGranted('USER_EDIT', subject: 'user')]
     #[Route('/{id}/edit', name: 'user_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function edit(Request $request, User $user): Response
     {
         $form = $this->createForm(UserType::class, $user, [

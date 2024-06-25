@@ -224,6 +224,27 @@
            <source>action.sign_in</source>
            <target>Sign in</target>
       </trans-unit>
+      <trans-unit id="action.user_administration">
+           <source>action.user_administration</source>
+           <target>User Administration</target>
+      </trans-unit>
+      <trans-unit id="message.record_not_found">
+           <source>message.record_not_found</source>
+           <target>Record not found!</target>
+      </trans-unit>
+      <trans-unit id="label.author">
+            <source>label.author</source>
+            <target>Author</target>
+      </trans-unit>
+      <trans-unit id="title.user_details">
+            <source>title.user_details</source>
+            <target>User details</target>
+      </trans-unit>
+      <trans-unit id="label.roles">
+            <source>label.roles</source>
+            <target>Roles</target>
+      </trans-unit>
+
 
     </body>
   </file>

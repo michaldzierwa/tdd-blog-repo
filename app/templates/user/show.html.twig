@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.user_details'|trans({'%id%': user.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.user_details'|trans({'%id%': user.id|default('')}) }}</h1>
+    {% if user is defined and user|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.id'|trans }}</dt>
+            <dd>{{ user.id }}</dd>
+            <dt>{{ 'label.email'|trans }}</dt>
+            <dd>{{  user.email }}</dd>
+            <dt>{{ 'label.roles'|trans }}</dt>
+            <dd>{{ user.roles|join(', ') }}</dd>
+        </dl>
+
+        {% if is_granted('USER_EDIT', user) %}
+            <a class="btn btn-outline-warning" href="{{ path('user_edit', {'id': user.id}) }}" title="Edit">
+                Edit
+            </a>
+        {% endif %}
+    {% else %}
+        <p>
+            {{ 'message.record_not_found'|trans }}
+        </p>
+    {% endif %}
+    <p>
+        <a href="{{ url('post_index') }}" title="{{ 'action.back_to_list'|trans }}">
+            {{ 'action.back_to_list'|trans }}
+        </a>
+    </p>
+{% endblock %}

@@ -30,15 +30,17 @@
                     <td>{{ category.createdAt|format_date('long') }}</td>
                     <td>{{ category.updatedAt|format_date('long') }}</td>
                     <td>
-                        <a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action.show'|trans }}">
+                        <a class="btn btn-outline-primary" href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action.show'|trans }}">
                             {{ 'action.show'|trans }}
                         </a>
-                        <a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">
+                        {% if is_granted("ROLE_ADMIN") %}
+                        <a class="btn btn-outline-warning" href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">
                             {{ 'action.edit'|trans }}
                         </a>
-                        <a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">
+                        <a class="btn btn-outline-danger" href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">
                             {{ 'action.delete'|trans }}
                         </a>
+                        {% endif %}
                     </td>
 
                 </tr>
@@ -49,11 +51,13 @@
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
-        <p>
-            <a href="{{ url('category_create') }}" title="{{ 'action.create_category'|trans }}">
-                {{ 'action.create_category'|trans }}
-            </a>
-        </p>
+        {% if is_granted("ROLE_ADMIN") %}
+            <p>
+                <a href="{{ url('category_create') }}" title="{{ 'action.create_category'|trans }}">
+                    {{ 'action.create_category'|trans }}
+                </a>
+            </p>
+        {% endif %}
         <p>
             <a href="{{ url('post_index') }}" title="{{ 'action.show_post_list'|trans }}">
                 {{ 'action.show_post_list'|trans }}
