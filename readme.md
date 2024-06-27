@@ -1,5 +1,5 @@
 ## Installation instruction
-
+(for local installation, installing with Docker is also possible)
 ### 1. Navigate to Project Directory
 
 In your terminal, navigate to the project directory:
